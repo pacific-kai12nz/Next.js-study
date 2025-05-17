@@ -1,6 +1,8 @@
 // Server Componentを使ったデータ取得の例
 // Server Componentはデフォルトで非同期関数として扱える
 
+import SearchForm from '@/components/SearchForm';
+import Link from 'next/link'
 // ブログ記事の型定義
 type Post = {
   id: number;
@@ -31,6 +33,9 @@ export default async function BlogPage() {
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-semibold mb-6">ブログ記事一覧</h1>
       
+      {/* 検索フォームを追加 */}
+      <SearchForm />
+      
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.slice(0, 9).map((post: Post) => (
           <div key={post.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
@@ -38,9 +43,12 @@ export default async function BlogPage() {
             <p className="text-gray-600 mb-4">
               {post.body.substring(0, 100)}...
             </p>
-            <div className="text-blue-500 font-medium hover:underline cursor-pointer">
+            <Link 
+              href={`/blog/${post.id}`}
+              className="text-blue-500 font-medium hover:underline cursor-pointer"
+            >
               続きを読む
-            </div>
+            </Link>
           </div>
         ))}
       </div>
